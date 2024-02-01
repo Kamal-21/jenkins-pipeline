@@ -1,0 +1,19 @@
+pipeline {
+	agent any {
+		stage('Checkout') {
+			steps {
+				scripts {
+					deleteDir()
+					checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/Kamal-21/jenkins-pipeline.git']]])
+				}
+			}
+		}
+		stage('Build and Deploy') {
+			steps {
+				echo 'Build and Deploy steps go here'
+				sh "cp -r index.html /tmp/"
+			}
+		}
+	}
+}
+
