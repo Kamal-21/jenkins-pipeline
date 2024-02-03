@@ -14,7 +14,7 @@ stage('Copy HTML to Nginx') {
     steps {
         script {
             docker.image('nginx').inside {
-                sh 'cp /path/to/your/repo/index.html /usr/share/nginx/html/'
+                sh 'cp /home/kamal/jenkins-pipeline/index.html /usr/share/nginx/html/'
             }
         }
     }
