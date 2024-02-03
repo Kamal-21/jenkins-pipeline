@@ -7,23 +7,24 @@ pipeline {
                 git 'https://github.com/Kamal-21/jenkins-pipeline/'
             }
         }
-        // Add more stages as needed
-    }
-}
-stage('Copy HTML to Nginx') {
-    steps {
-        script {
-            docker.image('nginx').inside {
-                sh 'cp /home/kamal/jenkins-pipeline/index.html /usr/share/nginx/html/'
+
+        stage('Copy HTML to Nginx') {
+            steps {
+                script {
+                    docker.image('nginx').inside {
+                        sh 'cp /home/kamal/jenkins-pipeline/index.html /usr/share/nginx/html/'
+                    }
+                }
             }
         }
-    }
-}
-stage('Restart Nginx') {
-    steps {
-        script {
-            docker.image('nginx').inside {
-                sh 'service nginx restart'
+
+        stage('Restart Nginx') {
+            steps {
+                script {
+                    docker.image('nginx').inside {
+                        sh 'service nginx restart'
+                    }
+                }
             }
         }
     }
