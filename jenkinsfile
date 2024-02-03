@@ -2,23 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
+        stage('Clone Repository') {
             steps {
-                script {
-                    deleteDir()
-                    checkout([$class: 'GitSCM', branches: [[name: 'main']], userRemoteConfigs: [[url: 'https://github.com/Kamal-21/jenkins-pipeline.git']]])
-                }
+                git 'https://github.com/your-username/your-repo.git'
             }
         }
-
-        stage('Build and Deploy') {
-            steps {
-                script {
-                    echo 'Building and Deploying...'
-                    sh "cp -r index.html /tmp/"
-                }
+        // Add more stages as needed
+    }
+}
+stage('Copy HTML to Nginx') {
+    steps {
+        script {
+            docker.image('nginx').inside {
+                sh 'cp /path/to/your/repo/index.html /usr/share/nginx/html/'
             }
         }
     }
 }
-
+stage('Restart Nginx') {
+    steps {
+        script {
+            docker.image('nginx').inside {
+                sh 'service nginx restart'
+            }
+        }
+    }
+}
